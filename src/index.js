@@ -9,6 +9,14 @@ dotenv.config({
 
 
 connectDB()
+.then(()=>{
+    app.listen(process.env.port||3001,()=>{
+        `Server is Runing at port ${process.env.port}....`
+    })
+})
+.catch((err)=>{
+    console.log("MongoDB Error",err)
+})
 
 
 
