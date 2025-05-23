@@ -16,5 +16,11 @@ app.use(express.static("public"))//pdf,images temp store
 
 app.use(cookieParser())//cookies set
 
+//routes
+import userRouter from "./routes/user.route.js"
 
-export {app}
+
+//routes Declaration
+app.use("/api/v1/users",userRouter)
+
+export default app

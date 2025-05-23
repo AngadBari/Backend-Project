@@ -1,6 +1,7 @@
 //require('dotenv').config({path:'./env'})-->wast way
 import dotenv from "dotenv"
 import connectDB from "./db/index.js"
+import app from "./app.js";
 
 dotenv.config({
     path:'./env'
@@ -9,28 +10,14 @@ dotenv.config({
 
 
 connectDB()
-.then(()=>{
-    app.listen(process.env.port||3001,()=>{
-        `Server is Runing at port ${process.env.port}....`
-    })
-})
-.catch((err)=>{
-    console.log("MongoDB Error",err)
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  .then(() => {
+    app.listen(process.env.port || 3001, () => {
+      console.log(`Server is running at port ${process.env.port || 3001}...`);
+    });
+  })
+  .catch((err) => {
+    console.log("MongoDB Error", err);
+  });
 
 //1st Method 
  
