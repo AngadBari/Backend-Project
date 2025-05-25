@@ -17,7 +17,8 @@ const uploadonclodinay=async (localFilepath)=>{
         resource_type:"auto"})
 
         //file has been uploaded Succesfully !!
-        console.log("File Upload SuccesFully !!",response.url)
+        //console.log("File Upload SuccesFully !!",response.url)
+        fs.unlinkSync(localFilepath)
         return response
 
 

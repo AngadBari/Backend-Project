@@ -1,5 +1,5 @@
 import { asynchandler } from "../utils/AsyncHandler.js";
-import ApiError from "../utils/ApiError.js"
+import {ApiError} from "../utils/ApiError.js"
 import { User } from "../models/user.models.js";
 import { uploadonclodinay } from  "../utils/cloudinary.js"
 import {apiResponse} from "../utils/ApiResponse.js"
@@ -38,7 +38,7 @@ const registerUser=asynchandler(async(req ,res)=>{
 
 //User already Hai Ya Nahi 
 
-const existUsre= User.findOne({
+const existUsre=await User.findOne({
     $or:[{ email },{ password }]
 })
 
@@ -50,8 +50,16 @@ if(existUsre){
 
 const avatarLocalpath=req.files?.avatar[0]?.path
 console.log("avatarLocalpath",avatarLocalpath)
-const coverImageLocalpath = req.files?.coverImage[0]?.path;
-console.log("coverImageLocalpath", coverImageLocalpath);
+//const coverImageLocalpath = req.files?.coverImage[0]?.path;
+//console.log("coverImageLocalpath", coverImageLocalpath);
+//console.log("req.files:", req.files);
+let coverImageLocalpath;
+if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length>0)
+{
+  coverImageLocalpath=req.files.coverImage[0].path
+}
+
+
 
 if(!avatarLocalpath){
     throw new ApiError(400,"Avatar file is required..!")
@@ -60,11 +68,13 @@ if(!avatarLocalpath){
 const avatar =await uploadonclodinay(avatarLocalpath)
 const coverImage = await uploadonclodinay(coverImageLocalpath);
 
+
+
 if(!avatar){
     throw new ApiError(400, "Avatar file is required..!");
 }
 
-//
+//Create user Object
 const user=await User.create({
     fullName,
     avatar:avatar.url,
@@ -74,6 +84,8 @@ const user=await User.create({
     username:username.toLowerCase()
 })
 
+
+//Remove password and Refresh Token
  const createdUser = await User.findById(user._id).select(
    " -password -refreshToken"
  );
@@ -83,6 +95,7 @@ const user=await User.create({
     throw new ApiError(500,"Somethong went wrong while register ..!")
  }
 
+ //response
  return res.status(201).json(
     new apiResponse(200,createdUser,"User Register Successfully..!")
  )
