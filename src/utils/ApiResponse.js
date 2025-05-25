@@ -9,3 +9,4 @@ class apiResponse{
 
     }
 }
+export {apiResponse}

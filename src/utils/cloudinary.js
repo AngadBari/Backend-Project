@@ -8,7 +8,7 @@ cloudinary.config({
 });
 
 
-const uploadclodinay=async (localFilepath)=>{
+const uploadonclodinay=async (localFilepath)=>{
   try {
      if(!localFilepath) return null
     
@@ -27,7 +27,7 @@ const uploadclodinay=async (localFilepath)=>{
   }
 }
 
-export{cloudinary}
+export{ uploadonclodinay }
 
 
 
