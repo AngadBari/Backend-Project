@@ -217,7 +217,7 @@ const generateAcessAndRefreshToken=async(userId) =>{
   const refreshAccessToken=asynchandler(async(req,res )=>{
     const incomingrefreshToken=req.cookies.refreshToken ||req.body.refreshToken
 
-    if(incomingrefreshToken)
+    if(!incomingrefreshToken)
     {
       throw new ApiError(401,"Unauthorized request..!")
     }
@@ -248,7 +248,7 @@ const generateAcessAndRefreshToken=async(userId) =>{
      return res
      .status(200)
      .cookie("accessToken",accessToken,newrefreshToken)
-     .cookie("refreshToken",refreshToken,options)
+     .cookie("refreshToken",newrefreshToken,options)
      .json(
        new ApiError(
          200,
