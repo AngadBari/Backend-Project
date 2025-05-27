@@ -265,6 +265,9 @@ const generateAcessAndRefreshToken=async(userId) =>{
    }
   })
 
+
+  //PasswordChange
+
   const changeCurrentPassword = asynchandler(async (req, res) => {
     
     const { oldPassword, newPassword } = req.body;
@@ -284,13 +287,14 @@ const generateAcessAndRefreshToken=async(userId) =>{
     .json(new apiResponse(200,{},"Password Change SucessFully.."))
   });
 
+  //getCurrentUsre
   const getCurrentUsre=asynchandler(async(req,res)=>{
     return res
     .status(200)
     .json(new apiResponse(200,{},"Current User Fetched Successfully"))
   })
   
-
+//upateAccountDetails
   const updateAccountDetails=asynchandler(async(req,res)=>{
     const {fullName, email}=req.body
 
@@ -319,6 +323,8 @@ const generateAcessAndRefreshToken=async(userId) =>{
 
   })
 
+
+  //updateAvatarImage
  const updateUserAvatar=asynchandler(async(req,res)=>{
   const avatarLocalPath=req.file?.path
   
@@ -350,6 +356,7 @@ const generateAcessAndRefreshToken=async(userId) =>{
 
  })
 
+ //updateCoverImage
  const updateUsercoverImage = asynchandler(async (req, res) => {
    const coverImageLocalPath = req.file?.path;
 
@@ -378,6 +385,8 @@ const generateAcessAndRefreshToken=async(userId) =>{
      .json(new apiResponse(200, user, "Cover Image Updated SuccesFully"));
  });
 
+
+ 
 export {
   registerUser,
   logInUser,
